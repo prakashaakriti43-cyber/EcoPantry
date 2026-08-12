@@ -8,7 +8,6 @@ from datetime import datetime, date
 from PIL import Image
 import cv2
 import easyocr
-from pyzbar.pyzbar import decode
 import streamlit as st
 import streamlit.components.v1 as components
 from style import apply_custom_sidebar_style
