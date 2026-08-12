@@ -212,10 +212,19 @@ def extract_expiry(text):
     return None
 
 def get_barcode(image):
-    codes = decode(image)
-    if len(codes) == 0:
-        return None
-    return codes[0].data.decode("utf-8")
+    """Detect barcodes using OpenCV without requiring ZBar."""
+    try:
+        detector = cv2.barcode.BarcodeDetector()
+
+        barcode_data, points, _ = detector.detectAndDecode(image)
+
+        if barcode_data:
+            return barcode_data
+
+    except Exception:
+        pass
+
+    return None
 
 def lookup_product(barcode):
     url = f"https://world.openfoodfacts.org/api/v0/product/{barcode}.json"
@@ -384,7 +393,7 @@ st.markdown("""
         line-height: 1.6;
     ">
         <strong style="color: #00FF87;">EcoPantry AI Computer Vision</strong> — Automatic Expiration Extraction<br>
-        <span style="opacity: 0.8;">Powered by OpenCV • EasyOCR • PyZbar • OpenFoodFacts</span>
+        <span style="opacity: 0.8;">Powered by OpenCV BarcodeDetector • EasyOCR • OpenFoodFacts</span>
     </div>
 """, unsafe_allow_html=True)
 
