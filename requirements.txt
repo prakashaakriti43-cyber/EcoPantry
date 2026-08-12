@@ -1,4 +1,6 @@
 streamlit
 pandas
+numpy
 Pillow
-certifi
+opencv-python-headless
+plotly
