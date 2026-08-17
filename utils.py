@@ -15,7 +15,6 @@ def apply_custom_sidebar_style():
     st.markdown(
         """
         <style>
-
         [data-testid="stSidebar"] {
             background-color: #121614 !important;
             border-right: 1px solid rgba(0, 255, 135, 0.15) !important;
@@ -32,7 +31,6 @@ def apply_custom_sidebar_style():
             color: #00FF87 !important;
             background-color: rgba(0, 255, 135, 0.08) !important;
         }
-
         </style>
         """,
         unsafe_allow_html=True
@@ -44,41 +42,32 @@ def check_and_send_notifications(
     user_email,
     days_threshold=3
 ):
-    """
-    Sends an EcoPantry expiry reminder email.
-
-    IMPORTANT:
-    Email credentials are read ONLY from
-    .streamlit/secrets.toml
-    """
+    """Send an EcoPantry pantry expiry reminder email."""
 
     # =====================================================
-    # GET EMAIL CREDENTIALS
+    # GET EMAIL CREDENTIALS FROM STREAMLIT SECRETS
     # =====================================================
 
-   try:
-    sender_email = st.secrets["email"]["sender_email"]
-    sender_password = st.secrets["email"]["sender_password"]
+    try:
+        sender_email = st.secrets["email"]["sender_email"]
+        sender_password = st.secrets["email"]["sender_password"]
 
-except Exception:
-    return (
-        False,
-        "❌ Email settings are missing. "
-        "Please check your Streamlit Secrets."
-    )
-
+    except Exception:
+        return (
+            False,
+            "❌ Email settings are missing. "
+            "Please check your Streamlit Secrets."
+        )
 
     # =====================================================
-    # BASIC EMAIL VALIDATION
+    # VALIDATE RECIPIENT EMAIL
     # =====================================================
 
     if not user_email or "@" not in user_email:
-
         return (
             False,
             "❌ Please enter a valid recipient email address."
         )
-
 
     # =====================================================
     # CHECK EXPIRING ITEMS
@@ -89,7 +78,6 @@ except Exception:
     expiring_items = []
     all_items = []
 
-
     for item in pantry_items:
 
         name = str(
@@ -98,20 +86,11 @@ except Exception:
 
         expiry = item.get("expiry_date")
 
-
         if not expiry:
             continue
 
-
         try:
-
-            # Handles:
-            # 2026-08-15
-            # 2026-08-15 00:00:00
-
-            expiry_string = str(
-                expiry
-            ).split(" ")[0]
+            expiry_string = str(expiry).split(" ")[0]
 
             expiry_date = datetime.strptime(
                 expiry_string,
@@ -119,19 +98,15 @@ except Exception:
             ).date()
 
         except Exception:
-
             continue
-
 
         days_left = (
             expiry_date - today
         ).days
 
-
         all_items.append(
             f"{name} — {days_left} days left"
         )
-
 
         if days_left < 0:
 
@@ -153,7 +128,6 @@ except Exception:
                 f"{days_left} days"
             )
 
-
     # =====================================================
     # CREATE EMAIL
     # =====================================================
@@ -162,11 +136,9 @@ except Exception:
 
     message["From"] = sender_email
     message["To"] = user_email
-
     message["Subject"] = (
         "🌱 EcoPantry — Pantry Expiry Alert"
     )
-
 
     body = (
         "🌱 ECOPANTRY\n"
@@ -174,19 +146,15 @@ except Exception:
         "==============================\n\n"
     )
 
-
     if expiring_items:
 
         body += (
             "⚠️ ITEMS NEEDING YOUR ATTENTION\n\n"
         )
 
-        body += "\n".join(
-            expiring_items
-        )
+        body += "\n".join(expiring_items)
 
         body += "\n\n"
-
 
     else:
 
@@ -196,26 +164,21 @@ except Exception:
             f"expiring within {days_threshold} days.\n\n"
         )
 
-
     if all_items:
 
         body += (
             "📦 PANTRY OVERVIEW\n\n"
         )
 
-        body += "\n".join(
-            all_items
-        )
+        body += "\n".join(all_items)
 
         body += "\n\n"
-
 
     body += (
         "Open your EcoPantry dashboard to "
         "manage your inventory.\n\n"
         "— EcoPantry"
     )
-
 
     message.attach(
         MIMEText(
@@ -225,9 +188,8 @@ except Exception:
         )
     )
 
-
     # =====================================================
-    # SEND THROUGH GMAIL SMTP
+    # SEND EMAIL THROUGH GMAIL SMTP
     # =====================================================
 
     try:
@@ -235,7 +197,6 @@ except Exception:
         context = ssl.create_default_context(
             cafile=certifi.where()
         )
-
 
         with smtplib.SMTP(
             "smtp.gmail.com",
@@ -260,13 +221,11 @@ except Exception:
                 message
             )
 
-
         return (
             True,
             f"📧 Reminder successfully sent to "
             f"{user_email}!"
         )
-
 
     except smtplib.SMTPAuthenticationError:
 
@@ -274,9 +233,8 @@ except Exception:
             False,
             "❌ Gmail authentication failed. "
             "Check your sender email and Gmail App Password "
-            "in .streamlit/secrets.toml."
+            "in Streamlit Secrets."
         )
-
 
     except smtplib.SMTPException as e:
 
@@ -284,7 +242,6 @@ except Exception:
             False,
             f"❌ Gmail could not send the email: {e}"
         )
-
 
     except Exception as e:
 
