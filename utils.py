@@ -56,18 +56,16 @@ def check_and_send_notifications(
     # GET EMAIL CREDENTIALS
     # =====================================================
 
-    try:
+   try:
+    sender_email = st.secrets["email"]["sender_email"]
+    sender_password = st.secrets["email"]["sender_password"]
 
-        sender_email = st.secrets["email"]["sender_email"]
-        sender_password = st.secrets["email"]["sender_password"]
-
-    except Exception:
-
-        return (
-            False,
-            "❌ Email settings are missing. "
-            "Please check .streamlit/secrets.toml."
-        )
+except Exception:
+    return (
+        False,
+        "❌ Email settings are missing. "
+        "Please check your Streamlit Secrets."
+    )
 
 
     # =====================================================
