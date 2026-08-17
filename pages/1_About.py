@@ -1,10 +1,12 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import textwrap
+
 from style import apply_custom_sidebar_style
 
 
 # =========================================================
-# INITIAL SETUP & SIDEBAR
+# PAGE CONFIG
 # =========================================================
 
 st.set_page_config(
@@ -18,13 +20,13 @@ apply_custom_sidebar_style()
 
 
 # =========================================================
-# CUSTOM STYLING (CSS)
+# CUSTOM CSS
 # =========================================================
 
-st.markdown("""
+st.markdown(
+    """
 <style>
 
-/* Global Page Background */
 .stApp {
     background-color: #0E1311;
 }
@@ -35,7 +37,6 @@ st.markdown("""
     max-width: 1050px;
 }
 
-/* Modern Glow Typography */
 .hero-header {
     display: flex;
     align-items: center;
@@ -55,7 +56,9 @@ st.markdown("""
     font-weight: 800;
     font-size: 2.6rem;
     letter-spacing: -0.5px;
-    filter: drop-shadow(0 0 12px rgba(0, 255, 135, 0.3));
+    filter: drop-shadow(
+        0 0 12px rgba(0, 255, 135, 0.3)
+    );
 }
 
 .page-subtitle {
@@ -64,7 +67,6 @@ st.markdown("""
     margin-bottom: 2rem;
 }
 
-/* Glassmorphic Feature Cards */
 .about-card {
     background: rgba(22, 28, 25, 0.85);
     border: 1px solid rgba(0, 255, 135, 0.18);
@@ -81,7 +83,8 @@ st.markdown("""
 .about-card:hover {
     border-color: rgba(0, 255, 135, 0.4);
     transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0, 255, 135, 0.12);
+    box-shadow:
+        0 12px 35px rgba(0, 255, 135, 0.12);
 }
 
 .card-title {
@@ -89,7 +92,8 @@ st.markdown("""
     font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 0.8rem;
-    text-shadow: 0 0 8px rgba(0, 255, 135, 0.3);
+    text-shadow:
+        0 0 8px rgba(0, 255, 135, 0.3);
 }
 
 .card-text {
@@ -104,10 +108,9 @@ st.markdown("""
 }
 
 .card-text li {
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
 }
 
-/* Highlight Box */
 .highlight-box {
     background: rgba(0, 255, 135, 0.06);
     border-left: 4px solid #00FF87;
@@ -117,7 +120,6 @@ st.markdown("""
     font-size: 0.92rem;
 }
 
-/* Footer */
 .footer {
     text-align: center;
     color: #6C7A70;
@@ -128,14 +130,17 @@ st.markdown("""
 }
 
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True
+)
 
 
 # =========================================================
-# HEADER SECTION
+# HEADER
 # =========================================================
 
-st.markdown("""
+st.markdown(
+    """
 <div class="hero-header">
     <h1 class="page-title">🌿 About EcoPantry</h1>
 </div>
@@ -144,11 +149,13 @@ st.markdown("""
     Learn about our mission to revolutionize kitchen management
     and eliminate household food waste.
 </p>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True
+)
 
 
 # =========================================================
-# CONTENT GRID
+# CONTENT
 # =========================================================
 
 col1, col2 = st.columns(2)
@@ -160,78 +167,104 @@ col1, col2 = st.columns(2)
 
 with col1:
 
-    # Mission Card
-    st.markdown("""
-    <div class="about-card">
-        <div class="card-title">🚀 Our Mission</div>
+    mission_card = """
+<div class="about-card">
+    <div class="card-title">🚀 Our Mission</div>
 
-        <div class="card-text">
-            Every year, millions of tons of fresh food are wasted
-            simply due to overlooked expiration dates and inefficient
-            storage.
+    <div class="card-text">
+        Every year, millions of tons of fresh food are wasted
+        simply due to overlooked expiration dates and inefficient
+        storage.
 
-            <strong>EcoPantry</strong> aims to empower households to
-            reduce food waste, optimize grocery spending, and build
-            sustainable cooking habits through automated tracking
-            and AI insights.
-        </div>
+        <br><br>
 
-        <div class="highlight-box">
-            <span style="color: #00FF87; font-weight: bold;">
-                Goal:
-            </span>
-            Reduce household grocery waste by up to 30%.
-        </div>
+        <strong>EcoPantry</strong> aims to empower households to
+        reduce food waste, optimize grocery spending, and build
+        sustainable cooking habits through automated tracking
+        and AI insights.
     </div>
-    """, unsafe_allow_html=True)
 
-
-    # UN SDG Goal Card
-    st.markdown("""
-    <div class="about-card">
-        <div class="card-title">🌍 UN SDG Goal 12</div>
-
-        <div class="card-text">
-            We align with United Nations Sustainable Development
-            Goal 12:
-            <strong>Responsible Consumption and Production</strong>
-            (SDG 12.3) to halve per capita global food waste at
-            the retail and consumer levels.
-        </div>
+    <div class="highlight-box">
+        <span style="color:#00FF87;font-weight:bold;">
+            Goal:
+        </span>
+        Reduce household grocery waste by up to 30%.
     </div>
-    """, unsafe_allow_html=True)
+</div>
+"""
+
+    st.markdown(
+        textwrap.dedent(mission_card),
+        unsafe_allow_html=True
+    )
 
 
-    # Core Features Card
-    st.markdown("""
-    <div class="about-card">
-        <div class="card-title">⚡ Smart Core Features</div>
+    # SDG CARD
 
-        <div class="card-text">
-            <ul>
-                <li>
-                    <strong>📷 Barcode & Vision Logger:</strong>
-                    Instantly scan and log packaged groceries.
-                </li>
+    sdg_card = """
+<div class="about-card">
+    <div class="card-title">🌍 UN SDG Goal 12</div>
 
-                <li>
-                    <strong>📦 Real-time Tracker:</strong>
-                    Dynamic freshness badges and expiry countdowns.
-                </li>
-
-                <li>
-                    <strong>🍳 Leftover Magic:</strong>
-                    AI recipe ideas utilizing remaining inventory.
-                </li>
-
-                <li>
-                    <strong>💬 Assistant Drawer:</strong>
-                    24/7 AI guide for food preservation queries.
-                </li>
-            </ul>
-        </div>
+    <div class="card-text">
+        We align with United Nations Sustainable Development
+        Goal 12:
+        <strong>Responsible Consumption and Production</strong>
+        (SDG 12.3) to halve per capita global food waste at
+        the retail and consumer levels.
     </div>
-    """, unsafe_allow_html=True)
+</div>
+"""
+
+    st.markdown(
+        textwrap.dedent(sdg_card),
+        unsafe_allow_html=True
+    )
+
+
+    # FEATURES CARD
+
+    features_card = """
+<div class="about-card">
+    <div class="card-title">⚡ Smart Core Features</div>
+
+    <div class="card-text">
+        <ul>
+
+            <li>
+                <strong>📷 Barcode & Vision Logger:</strong>
+                Instantly scan and log packaged groceries.
+            </li>
+
+            <li>
+                <strong>📦 Real-time Tracker:</strong>
+                Dynamic freshness badges and expiry countdowns.
+            </li>
+
+            <li>
+                <strong>🍳 Leftover Magic:</strong>
+                AI recipe ideas utilizing remaining inventory.
+            </li>
+
+            <li>
+                <strong>💬 Assistant Drawer:</strong>
+                24/7 AI guide for food preservation queries.
+            </li>
+
+            <li>
+                <strong>📊 Smart Analytics:</strong>
+                Track food waste, savings and sustainability
+                progress.
+            </li>
+
+        </ul>
+    </div>
+</div>
+"""
+
+    st.markdown(
+        textwrap.dedent(features_card),
+        unsafe_allow_html=True
+    )
 
 
 # =========================================================
@@ -240,315 +273,330 @@ with col1:
 
 with col2:
 
-    # Technologies Card
-    st.markdown("""
-    <div class="about-card">
-        <div class="card-title">🛠️ Technologies Used</div>
+    technologies_card = """
+<div class="about-card">
+    <div class="card-title">🛠️ Technologies Used</div>
 
-        <div class="card-text">
-            <ul>
-                <li>
-                    <strong>Frontend / Framework:</strong>
-                    Streamlit
-                </li>
+    <div class="card-text">
+        <ul>
 
-                <li>
-                    <strong>Data Processing:</strong>
-                    Pandas, NumPy
-                </li>
+            <li>
+                <strong>Frontend / Framework:</strong>
+                Streamlit
+            </li>
 
-                <li>
-                    <strong>Data Visualizations:</strong>
-                    Plotly
-                </li>
+            <li>
+                <strong>Data Processing:</strong>
+                Pandas, NumPy
+            </li>
 
-                <li>
-                    <strong>Computer Vision & AI:</strong>
-                    OpenCV, Gemini Vision API
-                </li>
+            <li>
+                <strong>Data Visualizations:</strong>
+                Plotly
+            </li>
 
-                <li>
-                    <strong>AI Chatbot:</strong>
-                    Embedded Chatbase Widget
-                </li>
-            </ul>
-        </div>
+            <li>
+                <strong>Computer Vision & AI:</strong>
+                OpenCV, Gemini Vision API
+            </li>
+
+            <li>
+                <strong>AI Chatbot:</strong>
+                Embedded Chatbase Widget
+            </li>
+
+            <li>
+                <strong>OCR:</strong>
+                Tesseract OCR
+            </li>
+
+        </ul>
     </div>
-    """, unsafe_allow_html=True)
+</div>
+"""
+
+    st.markdown(
+        textwrap.dedent(technologies_card),
+        unsafe_allow_html=True
+    )
 
 
-    # Future Scope Card
-    st.markdown("""
-    <div class="about-card">
-        <div class="card-title">🚀 Future Scope</div>
+    # FUTURE SCOPE
 
-        <div class="card-text">
-            <ul>
-                <li>
-                    <strong>IoT Hardware:</strong>
-                    Smart refrigerator camera and weight sensor
-                    integration.
-                </li>
+    future_card = """
+<div class="about-card">
+    <div class="card-title">🚀 Future Scope</div>
 
-                <li>
-                    <strong>OCR Receipt Reader:</strong>
-                    Automated grocery receipt scanning and item intake.
-                </li>
+    <div class="card-text">
+        <ul>
 
-                <li>
-                    <strong>Community Sharing:</strong>
-                    Local peer-to-peer excess food donation portal.
-                </li>
-            </ul>
-        </div>
+            <li>
+                <strong>IoT Hardware:</strong>
+                Smart refrigerator camera and weight sensor
+                integration.
+            </li>
+
+            <li>
+                <strong>OCR Receipt Reader:</strong>
+                Automated grocery receipt scanning and item intake.
+            </li>
+
+            <li>
+                <strong>Community Sharing:</strong>
+                Local peer-to-peer excess food donation portal.
+            </li>
+
+            <li>
+                <strong>Smart Notifications:</strong>
+                Personalized reminders for expiring food and
+                leftover consumption.
+            </li>
+
+        </ul>
     </div>
-    """, unsafe_allow_html=True)
+</div>
+"""
+
+    st.markdown(
+        textwrap.dedent(future_card),
+        unsafe_allow_html=True
+    )
 
 
 # =========================================================
-# FLOATING CHATBOT WIDGET
+# DIVIDER
+# =========================================================
+
+st.divider()
+
+
+# =========================================================
+# FLOATING CHATBOT
 # =========================================================
 
 def render_floating_bot():
 
     bot_code = """
-    <script>
-    (function() {
+<script>
+(function() {
 
-        if (window.parent.document.getElementById(
+    if (
+        window.parent.document.getElementById(
             'ecopantry-chat-widget'
-        )) {
-            return;
+        )
+    ) {
+        return;
+    }
+
+    const container =
+        window.parent.document.createElement('div');
+
+    container.id = 'ecopantry-chat-widget';
+
+    container.style.cssText = `
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+        font-family: -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
+    `;
+
+
+    const modal =
+        window.parent.document.createElement('div');
+
+    modal.id = 'ecopantry-chat-modal';
+
+    modal.style.cssText = `
+        display: none;
+        width: 380px;
+        height: 580px;
+        background: #1A1F1C;
+        border: 1px solid rgba(0, 255, 135, 0.4);
+        border-radius: 20px;
+        box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.7),
+            0 0 20px rgba(0, 255, 135, 0.2);
+        overflow: hidden;
+    `;
+
+
+    modal.innerHTML = `
+        <iframe
+            src="https://www.chatbase.co/chatbot-iframe/voXMr1BILlDLuXX4wRTSy"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allow="microphone"
+        ></iframe>
+    `;
+
+
+    const botBar =
+        window.parent.document.createElement('div');
+
+    botBar.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    `;
+
+
+    const tooltip =
+        window.parent.document.createElement('div');
+
+    tooltip.id = 'ecopantry-chat-tooltip';
+
+    tooltip.innerHTML =
+        "Hi! I'm your EcoPantry assistant 👋";
+
+    tooltip.style.cssText = `
+        background: rgba(26, 31, 28, 0.95);
+        color: #E0E0E0;
+        border: 1px solid rgba(0, 255, 135, 0.3);
+        padding: 10px 18px;
+        border-radius: 20px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        box-shadow:
+            0 8px 24px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(8px);
+        white-space: nowrap;
+    `;
+
+
+    const btn =
+        window.parent.document.createElement('button');
+
+    btn.innerHTML = `
+        <svg
+            id="bot-svg-icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#00FF87"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path
+                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5
+                   a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+            </path>
+
+            <path
+                d="M12 8l1 2 2 1-2 1-1 2-1-2-2-1
+                   2-1z">
+            </path>
+        </svg>
+    `;
+
+    btn.style.cssText = `
+        background: #121614;
+        border: 1px solid rgba(0, 255, 135, 0.4);
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow:
+            0 8px 20px rgba(0,0,0,0.5),
+            0 0 10px rgba(0,255,135,0.2);
+        transition: all 0.3s ease;
+    `;
+
+
+    btn.onmouseover = () => {
+
+        btn.style.transform = 'scale(1.12)';
+        btn.style.borderColor = '#00FF87';
+        btn.style.background = '#1A231D';
+
+        btn.style.boxShadow =
+            '0 0 25px rgba(0,255,135,0.7),' +
+            '0 0 50px rgba(0,255,135,0.3),' +
+            '0 8px 20px rgba(0,0,0,0.6)';
+
+        tooltip.style.borderColor = '#00FF87';
+
+        const icon =
+            btn.querySelector('#bot-svg-icon');
+
+        if (icon) {
+            icon.setAttribute(
+                'stroke',
+                '#81C784'
+            );
         }
-
-        const container =
-            window.parent.document.createElement('div');
-
-        container.id = 'ecopantry-chat-widget';
-
-        container.style.cssText = `
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 999999;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-            font-family: -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                sans-serif;
-        `;
+    };
 
 
-        // Chat modal
-        const modal =
-            window.parent.document.createElement('div');
+    btn.onmouseout = () => {
 
-        modal.id = 'ecopantry-chat-modal';
+        btn.style.transform = 'scale(1)';
+        btn.style.borderColor =
+            'rgba(0,255,135,0.4)';
+        btn.style.background = '#121614';
 
-        modal.style.cssText = `
-            display: none;
-            width: 380px;
-            height: 580px;
-            background: #1A1F1C;
-            border: 1px solid rgba(0, 255, 135, 0.4);
-            border-radius: 20px;
-            box-shadow:
-                0 12px 40px rgba(0, 0, 0, 0.7),
-                0 0 20px rgba(0, 255, 135, 0.2);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        `;
+        btn.style.boxShadow =
+            '0 8px 20px rgba(0,0,0,0.5),' +
+            '0 0 10px rgba(0,255,135,0.2)';
 
-        modal.innerHTML = `
-            <iframe
-                src="https://www.chatbase.co/chatbot-iframe/voXMr1BILlDLuXX4wRTSy"
-                width="100%"
-                height="100%"
-                frameborder="0"
-                allow="microphone"
-            ></iframe>
-        `;
+        tooltip.style.borderColor =
+            'rgba(0,255,135,0.3)';
+
+        const icon =
+            btn.querySelector('#bot-svg-icon');
+
+        if (icon) {
+            icon.setAttribute(
+                'stroke',
+                '#00FF87'
+            );
+        }
+    };
 
 
-        // Bot bar
-        const botBar =
-            window.parent.document.createElement('div');
+    let isOpen = false;
 
-        botBar.style.cssText = `
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        `;
+    btn.onclick = () => {
 
+        isOpen = !isOpen;
 
-        // Tooltip
-        const tooltip =
-            window.parent.document.createElement('div');
-
-        tooltip.id = 'ecopantry-chat-tooltip';
-
-        tooltip.innerHTML =
-            "Hi! I'm your EcoPantry assistant 👋";
-
-        tooltip.style.cssText = `
-            background: rgba(26, 31, 28, 0.95);
-            color: #E0E0E0;
-            border: 1px solid rgba(0, 255, 135, 0.3);
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        `;
+        if (isOpen) {
+            modal.style.display = 'block';
+            tooltip.style.display = 'none';
+        } else {
+            modal.style.display = 'none';
+            tooltip.style.display = 'block';
+        }
+    };
 
 
-        // Bot button
-        const btn =
-            window.parent.document.createElement('button');
+    botBar.appendChild(tooltip);
+    botBar.appendChild(btn);
 
-        btn.innerHTML = `
-            <svg
-                id="bot-svg-icon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#00FF87"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                style="transition: all 0.3s ease;"
-            >
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
-                </path>
+    container.appendChild(modal);
+    container.appendChild(botBar);
 
-                <path d="M12 8l1 2 2 1-2 1-1 2-1-2-2-1 2-1z">
-                </path>
-            </svg>
-        `;
+    window.parent.document.body.appendChild(
+        container
+    );
 
-        btn.style.cssText = `
-            background: #121614;
-            border: 1px solid rgba(0, 255, 135, 0.4);
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.5),
-                0 0 10px rgba(0, 255, 135, 0.2);
-            transition:
-                all 0.35s cubic-bezier(
-                    0.175,
-                    0.885,
-                    0.32,
-                    1.275
-                );
-        `;
-
-
-        // Hover effects
-        btn.onmouseover = () => {
-
-            btn.style.transform = 'scale(1.12)';
-            btn.style.borderColor = '#00FF87';
-
-            btn.style.boxShadow =
-                '0 0 25px rgba(0, 255, 135, 0.7), ' +
-                '0 0 50px rgba(0, 255, 135, 0.3), ' +
-                '0 8px 20px rgba(0,0,0,0.6)';
-
-            btn.style.background = '#1A231D';
-
-            tooltip.style.borderColor = '#00FF87';
-
-            tooltip.style.boxShadow =
-                '0 0 15px rgba(0, 255, 135, 0.4)';
-
-            const svgIcon =
-                btn.querySelector('#bot-svg-icon');
-
-            if (svgIcon) {
-                svgIcon.setAttribute(
-                    'stroke',
-                    '#81C784'
-                );
-            }
-        };
-
-
-        btn.onmouseout = () => {
-
-            btn.style.transform = 'scale(1)';
-
-            btn.style.borderColor =
-                'rgba(0, 255, 135, 0.4)';
-
-            btn.style.boxShadow =
-                '0 8px 20px rgba(0,0,0,0.5), ' +
-                '0 0 10px rgba(0, 255, 135, 0.2)';
-
-            btn.style.background = '#121614';
-
-            tooltip.style.borderColor =
-                'rgba(0, 255, 135, 0.3)';
-
-            tooltip.style.boxShadow =
-                '0 8px 24px rgba(0, 0, 0, 0.4)';
-
-            const svgIcon =
-                btn.querySelector('#bot-svg-icon');
-
-            if (svgIcon) {
-                svgIcon.setAttribute(
-                    'stroke',
-                    '#00FF87'
-                );
-            }
-        };
-
-
-        // Open / close chatbot
-        let isOpen = false;
-
-        btn.onclick = () => {
-
-            isOpen = !isOpen;
-
-            if (isOpen) {
-                modal.style.display = 'block';
-                tooltip.style.display = 'none';
-            } else {
-                modal.style.display = 'none';
-                tooltip.style.display = 'block';
-            }
-        };
-
-
-        // Add elements
-        botBar.appendChild(tooltip);
-        botBar.appendChild(btn);
-
-        container.appendChild(modal);
-        container.appendChild(botBar);
-
-        window.parent.document.body.appendChild(
-            container
-        );
-
-    })();
-    </script>
-    """
+})();
+</script>
+"""
 
     components.html(
         bot_code,
@@ -566,7 +614,7 @@ render_floating_bot()
 
 st.divider()
 
-st.markdown("""
+footer = """
 <div style="
     text-align: center;
     width: 100%;
@@ -575,14 +623,23 @@ st.markdown("""
     font-size: 0.88rem;
     line-height: 1.6;
 ">
-    <strong style="color: #00FF87;">
+
+    <strong style="color:#00FF87;">
         EcoPantry
     </strong>
+
     — Reducing Food Waste Since 2026
+
     <br>
 
-    <span style="opacity: 0.8;">
+    <span style="opacity:0.8;">
         Made with Python • Streamlit • Pandas • AI
     </span>
+
 </div>
-""", unsafe_allow_html=True)
+"""
+
+st.markdown(
+    textwrap.dedent(footer),
+    unsafe_allow_html=True
+)
